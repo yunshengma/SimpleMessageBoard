@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>留言板</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#wrap {
+			width: 600px;
+			background-color: #c8c8c8;
+			margin: 20px auto 0;
+			padding: 10px;
+		}
+		ul,li {
+			list-style-type: none;
+		}
+		#content_view {
+			padding: 10px;
+		}
+		#content_view li {
+			padding: 10px 0;
+			line-height: 22px;
+		}
+		#content_view #userName {
+			width: 520px;
+			height: 30px;
+			
+		}
+		#content_view #content {
+			width: 520px;
+			height: 100px;
+			vertical-align: top;
+		}
+		#content_view #submit {
+			width: 100px;
+			height: 30px;
+			border: 1px solid gray;
+			background-color: white;
+			/*margin-left: 40px;*/
+			position: relative;
+			left: 40px;
+		}
+		#message_list h3 {
+			background-color: lightpink;
+			padding: 10px;
+		}
+		#message_list p {
+			padding: 10px;
+			font-size: 14px;
+			text-indent: 2em;
+		}
+		#message_list a {
+			text-decoration: none;
+			float: right;
+		}
+		ul{
+			word-break:break-all; /*支持IE，chrome，FF不支持*/
+			word-wrap:break-word;/*支持IE，chrome，FF*/
+		}
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<div id="content_view">
+			<ul>
+				<li>
+					Q Q: <input type="text" id="userName"/>
+				</li>
+				<li>
+					留言: <textarea name="" id="content" rows="10" cols="30"></textarea>
+				</li>
+				<li>
+					<input type="button" value="提交" id="submit" />
+				</li>
+			</ul>
+		</div>
+		
+		<div id="message_list">
+			<h2>显示留言</h2>
+			<ul id="message_ul">
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="tween.js"></script>
+	<script type="text/javascript">
+		var userName = document.getElementById("userName");
+		var content = document.getElementById("content");
+		var submitBtn = document.getElementById("submit");
+		var uls = document.getElementById("message_ul");
+		var Li = document.getElementsByTagName("li");
+		var As = document.getElementsByTagName("a");
+		var a = 0;
+		var timer, timer2;
+		submitBtn.onclick = function() {
+			var name = userName.value;
+			var contentM = content.value;
+			if (name == "" || contentM == "") {
+				alert("留言者的姓名和内容不能为空!");
+				return;
+			}
+			userName.value = "";
+			content.value = "";
+			
+			var li = document.createElement("li");
+li.innerHTML = "<h3>" + name + "</h3><p>" + contentM + '<a href="###">删除</a></p>';
+			if (uls.children.length > 0) {
+				uls.insertBefore(li, uls.children[0]);
+			} else{
+				uls.appendChild(li);
+			}
+			
+			var t = 0;
+			var b = 0;
+			var c = li.offsetHeight;
+			var d = 20;
+			
+			clearInterval(timer);
+			timer = setInterval(function() {
+				t++;
+				li.style.height = Tween.Bounce.easeOut(t, b, c, d) +"px";
+				if (t >= d) {
+					clearInterval(timer);
+				}
+			}, 30);
+			var deleteA = li.getElementsByTagName("a")[0];
+			deleteA.onclick = function() {
+				var deleteLi = this.parentNode.parentNode;
+				
+				var t = 0;
+				var b = li.offsetHeight;
+				var c = 0 - b;
+				var d = 20;
+				
+				clearInterval(timer2);
+				timer2 = setInterval(function() {
+					t++;
+					li.style.height = Tween.Quart.easeOut(t, b, c, d) +"px";
+					if (t >= d) {
+						uls.removeChild(deleteLi);
+						clearInterval(timer2);
+					}
+				}, 30);
+			}
+		}
+		// setInterval(function(){
+		// 	for(var i = 0; i<As.length;i++){
+		// 		As[i].onclick = function(){
+		// 			uls.removeChild(this.parentNode.parentNode);
+		// 		}
+		// 	}
+		// },1)	
+	</script>
+	</html>
