@@ -127,31 +127,31 @@ li.innerHTML = "<h3>" + name + "</h3><p>" + contentM + '<a href="###">删除</a>
 				}
 			}, 30);
 			var deleteA = li.getElementsByTagName("a")[0];
-			deleteA.onclick = function() {
-				var deleteLi = this.parentNode.parentNode;
+			// deleteA.onclick = function() {
+			// 	var deleteLi = this.parentNode.parentNode;
 				
-				var t = 0;
-				var b = li.offsetHeight;
-				var c = 0 - b;
-				var d = 20;
+			// 	var t = 0;
+			// 	var b = li.offsetHeight;
+			// 	var c = 0 - b;
+			// 	var d = 20;
 				
-				clearInterval(timer2);
-				timer2 = setInterval(function() {
-					t++;
-					li.style.height = Tween.Quart.easeOut(t, b, c, d) +"px";
-					if (t >= d) {
-						uls.removeChild(deleteLi);
-						clearInterval(timer2);
-					}
-				}, 30);
-			}
+			// 	clearInterval(timer2);
+			// 	timer2 = setInterval(function() {
+			// 		t++;
+			// 		li.style.height = Tween.Quart.easeOut(t, b, c, d) +"px";
+			// 		if (t >= d) {
+			// 			uls.removeChild(deleteLi);
+			// 			clearInterval(timer2);
+			// 		}
+			// 	}, 30);
+			// }
 		}
-		// setInterval(function(){
-		// 	for(var i = 0; i<As.length;i++){
-		// 		As[i].onclick = function(){
-		// 			uls.removeChild(this.parentNode.parentNode);
-		// 		}
-		// 	}
-		// },1)	
+		setInterval(function(){
+			for(var i = 0; i<As.length;i++){
+				As[i].onclick = function(){
+					uls.removeChild(this.parentNode.parentNode);
+				}
+			}
+		},1)	
 	</script>
 	</html>
